@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package mlmbox.types;
+
+import "mlmbox/types/asset.proto";
+import "mlmbox/types/bonus.proto";
+import "mlmbox/types/distribution.proto";
+import "mlmbox/types/relationship.proto";
+
+message Account {
+  message Id {
+    oneof unique_field {
+      uint32 account_id = 1; // порядковый идентификатор аккаунта
+      string web3_address = 2; // web3 адрес кошелька привязанный к аккаунту
+      string ref_link_id = 3; // идентификатор реферальной ссылки
+    }
+  }
+  message RefLink {
+    uint32 account_id = 1;
+    uint32 source_id = 2;
+  }
+  message Username {
+    uint32 id = 1;
+    string web3_address = 2;
+    string ref_link_id = 3;
+  }
+  message Statistics {
+    uint32 partners_quantity = 1;
+    uint32 team_quantity = 2;
+    uint32 holder_partners_quantity = 3;
+    uint32 holder_team_quantity = 4;
+  }
+  message Info {
+    message List {
+      repeated mlmbox.types.Account.Info items = 1;
+    }
+    Username account = 1;
+    Username sponsor = 2;
+    mlmbox.types.Relationship relationship = 3;
+    uint32 registration_at = 4;
+    uint32 sponsor_branch = 5;
+    Statistics statistics = 6;
+    string web3_balance = 8;
+    string wallet_balance = 9;
+    string frozen_balance = 10;
+  }
+  Info info = 1;
+  mlmbox.types.Bonus.Summary income_statistics = 2;
+  mlmbox.types.Distribution.Config distribution_config = 3;
+  string locale = 4; // language identifier (en-US, ...)
+  bool is_admin = 5;
+}

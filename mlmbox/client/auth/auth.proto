@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package mlmbox.client.auth;
+
+import "mlmbox/types/account.proto";
+import "mlmbox/types/status.proto";
+import "google/protobuf/empty.proto";
+
+service Auth {
+  rpc TokenValidate (google.protobuf.Empty) returns (TokenValidateResponse) {} // token validity check
+  rpc TokenGenerate (mlmbox.types.Account.Id) returns (TokenGenerateResponse) {} // admin - method for generating a token
+
+  rpc Web3SignatureMessageGet (Web3SignatureMessageGetRequest) returns (Web3SignatureMessageGetResponse) {}
+  rpc Web3SignatureMessageAuth (Web3SignatureMessageAuthRequest) returns (AuthSignResponse) {}
+}
+
+message Web3SignatureMessageGetRequest {
+  uint32 channel_id = 1;
+  mlmbox.types.Account.Id sponsor = 2;
+}
+message Web3SignatureMessageGetResponse {
+  string message = 1;
+  uint32 expired_at = 2;
+}
+message Web3SignatureMessageAuthRequest {
+  string message = 1;
+  string signature = 2;
+  string locale = 3; // language identifier (en-US, ...)
+}
+message AuthSignResponse {
+  mlmbox.types.Status.Auth auth_status = 1; // Authentication status
+  mlmbox.types.Status.Referral referral_status = 2; // Referral status
+  string access_token = 3; // The token is used in the "authorization: X.Y.Z" header to make authorized API requests
+}
+message TokenValidateResponse {
+  mlmbox.types.Status.TokenValidate status = 1;
+}
+message TokenGenerateResponse {
+  string access_token = 1;
+}

@@ -1,0 +1,127 @@
+syntax = "proto3";
+
+package mlmbox.types;
+
+import "mlmbox/types/account.proto";
+import "mlmbox/types/bonus.proto";
+import "mlmbox/types/status.proto";
+
+message Wallet {
+  message Asset {
+    message Transaction {
+      message Id {
+        uint32 asset_id = 1;
+        uint32 transaction_id = 2;
+      }
+      message Kind {
+        enum Id {
+          UNKNOWN = 0;
+          CANCELED = 1;
+          EARNED = 2; // Заработано
+          SPENT = 3; // Потрачено
+          DEPOSIT = 4; // Пополнение
+          WITHDRAWAL = 5; // Вывод
+          DEPOSIT_WALLET_TRANSFER = 6; // Перевод между кошельками (получение)
+          WITHDRAWAL_WALLET_TRANSFER = 7; // Перевод между кошельками (отправка)
+          EXCHANGE = 8; // Обмен валюты
+          WITHDRAWAL_FEE = 9; // Комиссия для вывода
+          BURNED = 10; // Сжигание баланса
+          HOLD = 11; // Удержание баланса
+          UNHOLD = 12; // Освобождение баланса
+        }
+        Id kind_id = 1;
+      }
+      message List {
+        repeated mlmbox.types.Wallet.Asset.Transaction items = 1;
+      }
+      message Metadata {
+        message Deposit {
+          uint32 processing_id = 1;
+          string hash = 2;
+        }
+        message Withdrawal {
+          uint32 processing_id = 1;
+          string address = 2;
+          string hash = 3;
+        }
+        message Bonus {
+          message GameToken {
+            message Web3Purchase {
+              message Personal {
+                string transaction_hash = 1;
+                string amount = 2;
+              }
+              message Partners {
+                uint32 account_id = 1;
+                string transaction_hash = 2;
+                string amount = 3;
+              }
+            }
+          }
+          mlmbox.types.Bonus.Kind.Id bonus_id = 1;
+          oneof source {
+            string description = 2;
+            GameToken.Web3Purchase.Personal game_token_web3_purchase_personal = 3;
+            GameToken.Web3Purchase.Partners game_token_web3_purchase_partners = 4;
+          }
+        }
+        oneof unique_field {
+          string description = 1;
+          Bonus bonus = 5;
+          Deposit deposit = 10;
+          Withdrawal withdrawal = 2;
+          uint32 account_id = 6;
+          mlmbox.types.Account.Info account = 11;
+          uint32 transaction_id = 12;
+        }
+      }
+      uint32 transaction_id = 1;
+      Kind.Id kind_id = 2;
+      mlmbox.types.Status.Transaction status_id = 3;
+      string amount = 4;
+      string fee = 5;
+      string balance = 6;
+      uint32 created_at = 7;
+      Metadata metadata = 8;
+    }
+    message List {
+      repeated Asset items = 1;
+    }
+    uint32 asset_id = 1;
+    string asset_balance = 2;
+    repeated Transaction transactions = 3;
+    mlmbox.types.Bonus.Summary income_bonuses_statistics = 4;
+  }
+  message Processing {
+    message Id {
+      uint32 processing_id = 1;
+    }
+    message Asset {
+      message Id {
+        uint32 processing_id = 1;
+        uint32 asset_id = 2;
+      }
+      message WithdrawalAddressHistory {
+        message Value {
+          string address = 3;
+          uint32 last_used_at = 4;
+        }
+        repeated Value items = 1;
+      }
+      uint32 asset_id = 1;
+      bool settings_withdrawal_enabled = 3;
+      string settings_withdrawal_fee_base = 4;
+      string settings_withdrawal_fee_percent = 5;
+      string settings_withdrawal_operation_value_min = 6;
+      string settings_withdrawal_operation_value_max = 7;
+    }
+    message List {
+      repeated Processing items = 1;
+    }
+    uint32 processing_id = 1;
+    string processing_name = 2;
+    repeated Asset assets = 3;
+  }
+  repeated Asset assets = 1;
+  repeated Processing processings = 2;
+}

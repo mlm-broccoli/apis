@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package mlmbox.types;
+import "mlmbox/types/status.proto";
+
+message Distribution {
+  message Config {
+    message Bonus {
+      uint32 duration = 1;
+      string bonus_percent = 2;
+    }
+    repeated Bonus personal_purchase_game_token_bonuses = 1;
+    repeated Bonus partners_purchase_game_token_bonuses = 2;
+  }
+  message IncomeEvent {
+    message List {
+      repeated IncomeEvent items = 6;
+    }
+    message Kind {
+      enum Id {
+        UNKNOWN = 0;
+        PERSONAL = 1;
+        PARTNERS = 2;
+      }
+      Id kind_id = 1;
+    }
+    message Trigger {
+      string hash = 1;
+      string address = 2;
+      string amount = 3;
+    }
+    uint32 event_id = 1;
+    Kind.Id kind_id = 2;
+    Trigger trigger = 3; // ссылка на транзакцию которая вызвала начисление
+    string income_value = 4;
+    uint32 created_at = 5;
+    uint32 duration = 6;
+    mlmbox.types.Status.DistributionIncomeEvent status_id = 7;
+    uint32 approved_at = 8;
+    uint32 rejected_at = 9;
+    Trigger rejected_trigger = 10; // ссылка на транзакцию по причине которой отклонено начисление
+  }
+}
