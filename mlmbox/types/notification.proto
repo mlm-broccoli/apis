@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package mlmbox.types;
+import "mlmbox/types/wallet.proto";
+
+message Notification {
+  message AssetTransaction {
+    uint32 asset_id = 1;
+    mlmbox.types.Wallet.Asset.Transaction transaction = 2;
+  }
+  oneof message {
+    uint32 metrics_accounts_quantity = 1;
+    AssetTransaction wallet_transaction = 2;
+  }
+}

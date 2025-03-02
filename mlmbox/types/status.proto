@@ -8,7 +8,7 @@ message Status {
     AUTH_SIGN_IN = 1; // Authorization
     AUTH_SIGN_UP = 2; // Registration
   }
-  enum Referral {
+  enum Sponsor {
     REFERRAL_UNKNOWN = 0; // No referral
     REFERRAL_WRONG_LINK = 1; // Error referral link
     REFERRAL_BUSY = 2; // The user already has a referral (It is not possible to change the referral)

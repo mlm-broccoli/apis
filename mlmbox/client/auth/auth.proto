@@ -29,7 +29,7 @@ message Web3SignatureMessageAuthRequest {
 }
 message AuthSignResponse {
   mlmbox.types.Status.Auth auth_status = 1; // Authentication status
-  mlmbox.types.Status.Referral referral_status = 2; // Referral status
+  mlmbox.types.Status.Sponsor sponsor_status = 2; // Sponsor status
   string access_token = 3; // The token is used in the "authorization: X.Y.Z" header to make authorized API requests
 }
 message TokenValidateResponse {

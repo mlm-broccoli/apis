@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package mlmbox.types;
 
+import "mlmbox/types/asset.proto";
 import "mlmbox/types/account.proto";
 import "mlmbox/types/bonus.proto";
 import "mlmbox/types/status.proto";
@@ -94,19 +95,22 @@ message Wallet {
   }
   message Processing {
     message Id {
-      uint32 processing_id = 1;
+      oneof unique_field {
+        uint32 processing_id = 1;
+        string processing_name = 2;
+      }
     }
     message Asset {
       message Id {
-        uint32 processing_id = 1;
-        uint32 asset_id = 2;
+        mlmbox.types.Wallet.Processing.Id processing_id = 1;
+        mlmbox.types.Asset.Id asset_id = 2;
       }
       message WithdrawalAddressHistory {
-        message Value {
+        message Entity {
           string address = 3;
           uint32 last_used_at = 4;
         }
-        repeated Value items = 1;
+        repeated Entity items = 1;
       }
       uint32 asset_id = 1;
       bool settings_withdrawal_enabled = 3;

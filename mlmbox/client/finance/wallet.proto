@@ -22,12 +22,12 @@ service Wallet {
 }
 
 message WalletAssetGetRequest {
-  uint32 asset_id = 1;
+  mlmbox.types.Asset.Id asset_id = 1;
   mlmbox.types.Sort sort_transactions = 2;
   repeated mlmbox.types.Wallet.Asset.Transaction.Kind.Id filter_kind_ids = 3;
 }
 message WalletAssetTransactionListRequest {
-  uint32 asset_id = 1;
+  mlmbox.types.Asset.Id asset_id = 1;
   uint32 step_transaction_id = 2;
   mlmbox.types.Sort sort_transactions = 3;
   repeated mlmbox.types.Wallet.Asset.Transaction.Kind.Id filter_kind_ids = 4;
@@ -44,7 +44,7 @@ message WalletValidateAddressResponse {
   bool validated = 2;
 }
 message WalletWithdrawalRequest {
-  uint32 processing_id = 1;
+  mlmbox.types.Wallet.Processing.Id processing_id = 1;
   mlmbox.types.Asset.Amount operation_amount = 2;
   string address = 3;
   bool operation_fee_from_body = 4;

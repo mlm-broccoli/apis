@@ -5,8 +5,10 @@ package mlmbox.client.account;
 import "google/protobuf/empty.proto";
 import "mlmbox/types/account.proto";
 import "mlmbox/types/locale.proto";
+import "mlmbox/types/notification.proto";
 
 service Account {
   rpc Info (google.protobuf.Empty) returns (mlmbox.types.Account) {} // Display account information
   rpc SetLocale (mlmbox.types.Locale.Id) returns (mlmbox.types.Locale) {} // Update the language of communication
+  rpc Subscribe (google.protobuf.Empty) returns (stream mlmbox.types.Notification) {}
 }
