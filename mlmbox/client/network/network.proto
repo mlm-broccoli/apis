@@ -20,7 +20,6 @@ message TeamRequest {
 message TeamResponse {
   mlmbox.types.Account.Info account = 1;
   repeated mlmbox.types.Account.Info partners = 2;
-  repeated mlmbox.types.Account.Info sponsors = 3;
 }
 message TeamPartnerListRequest {
   TeamRequest request = 1;
