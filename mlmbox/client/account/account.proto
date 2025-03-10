@@ -10,5 +10,6 @@ import "mlmbox/types/notification.proto";
 service Account {
   rpc Info (google.protobuf.Empty) returns (mlmbox.types.Account) {} // Display account information
   rpc SetLocale (mlmbox.types.Locale.Id) returns (mlmbox.types.Locale) {} // Update the language of communication
+  rpc SetSponsor (mlmbox.types.Account.Id) returns (mlmbox.types.Account.Info) {} // Set sponsor (if the user has no sponsor)
   rpc Subscribe (google.protobuf.Empty) returns (stream mlmbox.types.Notification) {}
 }

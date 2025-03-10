@@ -9,10 +9,10 @@ message Status {
     AUTH_SIGN_UP = 2; // Registration
   }
   enum Sponsor {
-    REFERRAL_UNKNOWN = 0; // No referral
-    REFERRAL_WRONG_LINK = 1; // Error referral link
-    REFERRAL_BUSY = 2; // The user already has a referral (It is not possible to change the referral)
-    REFERRAL_EXISTS = 3; // The referral already exists
+    SPONSOR_UNKNOWN = 0; // No sponsor
+    SPONSOR_WRONG_LINK = 1; // Error sponsor link
+    SPONSOR_BUSY = 2; // The user already has a sponsor (It is not possible to change the sponsor)
+    SPONSOR_EXISTS = 3; // The sponsor already exists
   }
   enum TokenValidate {
     TOKEN_VALIDATE_UNKNOWN = 0;
